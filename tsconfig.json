@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+      "target": "es2015",
+      "baseUrl": ".",
+      "rootDir": ".",
+      "outDir": "./dist",
+      "allowJs": false,
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "noImplicitAny": true,
+      "experimentalDecorators": true,
+      "resolveJsonModule": true,
+      "esModuleInterop": true,
+      "declaration": true,
+      "sourceMap": true
+    },
+    "include": ["index.ts"],
+    "exclude": ["**_deprecated_**"]
+  }
+  
