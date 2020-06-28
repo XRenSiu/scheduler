@@ -2,22 +2,30 @@ type Node = {
   id: number
   sortIndex: number
 }
-abstract class Heap {
-  store: Array<Node> = []
+abstract class Heap<T> {
+  store: Array<T>
 
-  public push(node: Node) {
+  constructor(arr: Array<T> = []) {
+    this.store = arr
+    let length = arr.length
+    for (let k = Math.floor(length / 2) - 1; k >= 0; k--) {
+      this.sink(k, length)
+    }
+  }
+
+  public push(node: T) {
     const index = this.store.length
     this.store.push(node)
     this.swim(node, index)
     return index + 1
   }
 
-  public top(): Node | null {
+  public top(): T | null {
     const first = this.store[0]
     return first === undefined ? null : first
   }
 
-  public pop(): Node | null {
+  public pop(): T | null {
     const heap = this.store
     const first = heap[0]
     if (first !== undefined) {
@@ -30,15 +38,6 @@ abstract class Heap {
     } else {
       return null
     }
-  }
-
-  public build(arr: Array<Node>) {
-    this.store = arr
-    let length = arr.length
-    for (let k = Math.floor(length / 2) - 1; k >= 0; k--) {
-      this.sink(k, length)
-    }
-    return this
   }
 
   sink(index: number, lengthTag: number) {
@@ -74,7 +73,7 @@ abstract class Heap {
     }
   }
 
-  swim(node: Node, i: number) {
+  swim(node: T, i: number) {
     let index = i
     while (true) {
       const parentIndex = (index - 1) >>> 1
@@ -97,10 +96,10 @@ abstract class Heap {
     heap[j] = temp
   }
 
-  abstract compare(a: Node, b: Node): number
+  abstract compare(a: T, b: T): number
 }
 
-export class MinHeap extends Heap {
+export class MinHeap extends Heap<Node> {
   compare(a: Node, b: Node) {
     // Compare sort index first, then task id.
     const diff = a.sortIndex - b.sortIndex
@@ -108,7 +107,7 @@ export class MinHeap extends Heap {
   }
 }
 
-export class MaxHeap extends Heap {
+export class MaxHeap extends Heap<Node> {
   compare(a: Node, b: Node) {
     // Compare sort index first, then task id.
     const diff = b.sortIndex - a.sortIndex
@@ -116,32 +115,12 @@ export class MaxHeap extends Heap {
   }
 }
 
-export function buildMinHeap(arr: Array<Node>) {
-  const minHeap = new MinHeap()
-  return minHeap.build(arr)
-}
-
-export function buildMaxHeap(arr: Array<Node>) {
-  const maxHeap = new MaxHeap()
-  return maxHeap.build(arr)
-}
-
-export function heapSortBigger(arr: Array<Node>): Array<Node> {
-  let maxHeap = buildMaxHeap(arr)
-  let length = maxHeap.store.length
+export function heapSort(arr: Array<Node>, increase = true) {
+  let heap = increase ? new MaxHeap(arr) : new MinHeap(arr)
+  let length = heap.store.length
   while (length > 0) {
-    maxHeap.swap(0, --length)
-    maxHeap.sink(0, length)
+    heap.swap(0, --length)
+    heap.sink(0, length)
   }
-  return maxHeap.store
-}
-
-export function heapSortLess(arr: Array<Node>): Array<Node> {
-  let minHeap = buildMinHeap(arr)
-  let length = minHeap.store.length
-  while (length > 0) {
-    minHeap.swap(0, --length)
-    minHeap.sink(0, length)
-  }
-  return minHeap.store
+  return heap.store
 }
