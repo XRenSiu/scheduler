@@ -1,8 +1,8 @@
 {
   "name": "scheduler",
   "version": "0.1.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Cooperative scheduler for the browser environment.",
+  "main": "dist/index.js",
   "scripts": {
     "prepare": "rimraf ./dist && tsc",
     "build": "rimraf ./dist && tsc"
