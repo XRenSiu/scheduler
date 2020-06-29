@@ -2,7 +2,8 @@ import {
   getCurrentTime,
   requestHostCallback,
   requestHostTimeout,
-  cancelHostTimeout
+  cancelHostTimeout,
+  shouldYieldToHost
 } from './scheduler-host-config'
 import { MinHeap } from './heap'
 import {
@@ -230,4 +231,19 @@ function workLoop(hasTimeRemaining: Function, initialTime: number) {
     }
     return false
   }
+}
+
+export function shouldYield() {
+  const currentTime = getCurrentTime()
+  advanceTimers(currentTime)
+  const firstTask = taskQueue.top() as Task
+  return (
+    (firstTask !== currentTask &&
+      currentTask !== null &&
+      firstTask !== null &&
+      firstTask.callback !== null &&
+      firstTask.startTime <= currentTime &&
+      firstTask.expirationTime < currentTask.expirationTime) ||
+    shouldYieldToHost()
+  )
 }

@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
-    "target": "es2015",
     "baseUrl": ".",
     "rootDir": "./src",
     "outDir": "./dist",
-    "allowJs": false,
+    "target": "es2019",
     "module": "commonjs",
     "moduleResolution": "node",
+    "allowJs": false,
     "noImplicitAny": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,

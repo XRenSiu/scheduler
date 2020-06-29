@@ -1,17 +1,21 @@
 {
   "name": "scheduler",
   "version": "0.1.0",
-  "description": "Cooperative scheduler for the browser environment.",
+  "description": "Salute React Scheduler - Cooperative scheduler for the browser environment.",
   "main": "dist/index.js",
   "scripts": {
     "prepare": "rimraf ./dist && tsc",
-    "build": "rimraf ./dist && tsc"
+    "build": "rimraf ./dist && tsc",
+    "test": "jest"
   },
   "author": "xrensiu@gmail.com",
   "license": "MIT",
   "devDependencies": {
+    "@types/jest": "^26.0.3",
     "@types/node": "^14.0.13",
+    "jest": "^26.1.0",
     "rimraf": "^3.0.2",
+    "ts-jest": "^26.1.1",
     "typescript": "^3.9.5"
   }
 }

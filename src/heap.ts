@@ -44,7 +44,6 @@ abstract class Heap<T> {
     const heap = this.store
     let node = heap[index]
     const length = lengthTag
-    debugger
     while (index < length) {
       const leftIndex = (index + 1) * 2 - 1
       const left = leftIndex >= length ? undefined : heap[leftIndex]
